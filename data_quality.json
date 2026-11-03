@@ -1,0 +1,14 @@
+{
+  "rows_in": 5801,
+  "dropped_length_out_of_range": 0,
+  "age_out_of_range_set_missing": 0,
+  "age_on_unreadable_scale_set_missing": 2,
+  "weight_allometry_outlier_set_missing": 56,
+  "gonad_heavier_than_body_set_missing": 0,
+  "rows_out": 5801,
+  "aged_fish": 4430,
+  "unaged_fish": 1371,
+  "landings": 101,
+  "landings_with_aged_fish": 95,
+  "raw_sha256": "8934f6ee89bcfd815e935dfa7dc49c016194c1709b080f1aacdccdd69795124e"
+}

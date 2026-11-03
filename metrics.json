@@ -1,0 +1,81 @@
+{
+  "run_id": "fd82d154-8934f6ee",
+  "selected_model": "alk_20mm",
+  "selection_note": "best=ridge_length; one-SE limit MAE=1.2191",
+  "split": {
+    "dev_fish": 3481,
+    "dev_landings": 76,
+    "test_fish": 949,
+    "test_landings": 19,
+    "test_gear_counts": {
+      "otter_trawl": 778,
+      "pair_trawl": 109,
+      "handline": 62
+    }
+  },
+  "test_evaluated": true,
+  "promoted": true,
+  "promotion_checks": {
+    "reference_model": "alk_20mm",
+    "mae_difference_vs_reference": {
+      "estimate": 0.0,
+      "ci_low": 0.0,
+      "ci_high": 0.0
+    },
+    "beats_reference": true,
+    "interval_coverage": {
+      "estimate": 0.9304531085353003,
+      "ci_low": 0.8880169523481626,
+      "ci_high": 0.9488123447889129
+    },
+    "target_coverage": 0.9,
+    "coverage_ok": true
+  },
+  "test_metrics_selected": {
+    "n": 949.0,
+    "mae": 0.9876020653467755,
+    "rmse": 1.3005864160795142,
+    "bias": 0.0682133272618286,
+    "exact_rate": 0.3624868282402529,
+    "within_1yr_rate": 0.78609062170706,
+    "qwk": 0.7987664719509364,
+    "mae_ci_low": 0.9037803959782157,
+    "mae_ci_high": 1.1684534550364647
+  },
+  "conformal_half_widths": {
+    "<4": 1.4267782426778242,
+    "4-7": 2.3455149501661126,
+    "7-10": 3.1594202898550723,
+    ">=10": 3.7301587301587293
+  },
+  "permutation_importance_mae": {
+    "total_length_mm": 1.3324
+  },
+  "temporal_check": [
+    {
+      "model": "alk_20mm",
+      "train_years": "<=1981",
+      "train_n": 3717,
+      "n": 713,
+      "mae": 1.2738235150315287,
+      "rmse": 1.7689630990737106,
+      "bias": -0.24248221750985757,
+      "exact_rate": 0.2650771388499299,
+      "within_1yr_rate": 0.697054698457223,
+      "qwk": 0.8025091150814796,
+      "mae_gears_seen_in_training": 1.1068495128410833
+    }
+  ],
+  "unaged_population": {
+    "n": 1371,
+    "length_mean_aged": 338.54808126410836,
+    "length_mean_unaged": 347.8446389496718,
+    "length_outside_aged_range": 1,
+    "readability_counts": {
+      "faint_or_absent": 711,
+      "NaN": 300,
+      "unreadable": 287,
+      "well_marked": 73
+    }
+  }
+}

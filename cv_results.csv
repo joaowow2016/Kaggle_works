@@ -1,0 +1,11 @@
+model,feature_set,status,cv_mae_mean,cv_mae_se,selected
+dummy_median,length_only,eligible,2.3490009388651467,0.11666298932712688,False
+vb_inverse,length_only,eligible,1.5267839189495596,0.17308817829659265,False
+alk_20mm,length_only,eligible,1.1711115872470914,0.0487406215809227,True
+ridge_length,length_only,eligible,1.1656210346409006,0.05347925934264128,False
+ridge_dock,dock,eligible,1.1732905447960171,0.04873826285550658,False
+hgb_dock_small,dock,eligible,1.1971572900859466,0.05148296455877817,False
+hgb_dock,dock,eligible,1.2056971165143227,0.053644861179646376,False
+hgb_dock_poisson,dock,eligible,1.198358313207129,0.05018092662925999,False
+hgb_dock_weight,dock_weight,eligible,1.188290594369088,0.04515583780741725,False
+hgb_dissection,dissection,research_only,1.1800176872497674,0.04342250242483127,False

@@ -1,0 +1,19 @@
+{
+  "run_id": "fd82d154-8934f6ee",
+  "created_utc": "2026-11-03T16:23:49+00:00",
+  "model_name": "alk_20mm",
+  "promoted": true,
+  "bundle_sha256": "5199b960a0a76a7c4d4b4ab5caf2d74eaaddc508f8eaa2dc7736a22190a8337b",
+  "raw_data_sha256": "8934f6ee89bcfd815e935dfa7dc49c016194c1709b080f1aacdccdd69795124e",
+  "config_sha256": "fd82d1549b7f58a0b7adb70719333528f34c5196253b9af7578d2fa5e1387f2a",
+  "git_commit": null,
+  "seed": 20261103,
+  "versions": {
+    "python": "3.13.18",
+    "numpy": "2.5.4",
+    "pandas": "3.1.0",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1",
+    "pydantic": "2.14.2"
+  }
+}

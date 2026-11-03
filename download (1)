@@ -1,0 +1,11 @@
+__pycache__/
+*.egg-info/
+.venv/
+.coverage
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+data/processed/
+data/predictions/
+*.part
+models/

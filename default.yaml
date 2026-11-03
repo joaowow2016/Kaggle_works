@@ -1,0 +1,90 @@
+# All modelling decisions live here. The hash of this file is part of every run ID.
+seed: 20261103
+
+paths:
+  raw_csv: data/raw/seanoe_76263.csv
+  processed: data/processed/fish.parquet
+  reports_dir: reports
+  models_dir: models
+
+source:
+  url: https://www.seanoe.org/data/00642/75444/data/76263.csv
+  sha256: 8934f6ee89bcfd815e935dfa7dc49c016194c1709b080f1aacdccdd69795124e
+
+qc:
+  length_mm: [50, 800]
+  age_years: [0, 30]
+  # Published length-weight relation (Haimovici et al. 2020). Fixed, not fitted, so QC cannot
+  # leak test information. Weights further than max_log_residual from it are set to missing.
+  allometry_a: 1.735e-5
+  allometry_b: 2.979
+  max_log_residual: 0.5
+
+split:
+  salt: pagrus-age-v1
+  test_fraction: 0.20          # of landings, stratified by gear
+  temporal_train_max_year: 1981  # robustness check: fit <=1981, test >=1982
+
+cv:
+  n_splits: 5
+  n_repeats: 3
+
+conformal:
+  alpha: 0.10
+  predicted_age_edges: [4, 7, 10]
+  min_bin_size: 50
+
+evaluation:
+  n_bootstrap: 2000
+  max_age_clip: 30
+  # A feature whose missing rate differs more than this between aged and unaged fish cannot be
+  # used by a selectable model: its behaviour on the target population could not be validated.
+  missingness_shift_threshold: 0.30
+
+promotion:
+  reference_model: alk_20mm
+  min_interval_coverage: 0.85
+
+feature_sets:
+  length_only:
+    numeric: [total_length_mm]
+    categorical: []
+  dock:
+    numeric: [total_length_mm, month_sin, month_cos, depth_min_m, depth_max_m]
+    categorical: [gear]
+  dock_weight:
+    numeric: [total_length_mm, total_weight_g, month_sin, month_cos, depth_min_m, depth_max_m]
+    categorical: [gear]
+  dissection:  # needs a dissected fish; reported as an experiment, never deployed
+    numeric: [total_length_mm, total_weight_g, gonad_weight_g, month_sin, month_cos,
+              depth_min_m, depth_max_m]
+    categorical: [gear, sex, maturity_stage]
+
+# Ordered simplest to most complex: the one-standard-error rule picks the earliest qualifying one.
+candidates:
+  - {name: dummy_median, kind: dummy, feature_set: length_only}
+  - {name: vb_inverse, kind: vb, feature_set: length_only}
+  - {name: alk_20mm, kind: alk, feature_set: length_only, params: {bin_mm: 20}}
+  - {name: ridge_length, kind: ridge_spline, feature_set: length_only, params: {alpha: 1.0}}
+  - {name: ridge_dock, kind: ridge_spline, feature_set: dock, params: {alpha: 1.0}}
+  - name: hgb_dock_small
+    kind: hgb
+    feature_set: dock
+    params: {learning_rate: 0.05, max_iter: 200, max_leaf_nodes: 6, min_samples_leaf: 40, l2_regularization: 1.0}
+  - name: hgb_dock
+    kind: hgb
+    feature_set: dock
+    params: {learning_rate: 0.05, max_iter: 300, max_leaf_nodes: 12, min_samples_leaf: 30, l2_regularization: 1.0}
+  - name: hgb_dock_poisson
+    kind: hgb
+    feature_set: dock
+    params: {loss: poisson, learning_rate: 0.05, max_iter: 300, max_leaf_nodes: 12, min_samples_leaf: 30, l2_regularization: 1.0}
+  - name: hgb_dock_weight
+    kind: hgb
+    feature_set: dock_weight
+    params: {learning_rate: 0.05, max_iter: 300, max_leaf_nodes: 12, min_samples_leaf: 30, l2_regularization: 1.0}
+  - name: hgb_dissection
+    kind: hgb
+    feature_set: dissection
+    selectable: false
+    params: {learning_rate: 0.05, max_iter: 300, max_leaf_nodes: 12, min_samples_leaf: 30, l2_regularization: 1.0}
